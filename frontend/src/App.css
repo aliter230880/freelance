@@ -1,0 +1,43 @@
+/* Global app styles */
+
+:root {
+  --bg: #050505;
+}
+
+html, body, #root {
+  background: var(--bg);
+}
+
+.App {
+  min-height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.35);
+}
+
+/* Selection */
+::selection {
+  background: rgba(16, 185, 129, 0.35);
+  color: #ffffff;
+}
+
+/* Line clamp helper */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
