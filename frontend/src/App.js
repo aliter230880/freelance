@@ -6,6 +6,7 @@ import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import CategoryPage from './components/CategoryPage';
 import NoteModal from './components/NoteModal';
+import ZohoBooksPage from './components/ZohoBooksPage';
 
 function Shell() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -76,7 +77,10 @@ function App() {
   return (
     <NotesProvider>
       <BrowserRouter>
-        <Shell />
+        <Routes>
+          <Route path="/projects/zoho-books" element={<ZohoBooksPage />} />
+          <Route path="/*" element={<Shell />} />
+        </Routes>
       </BrowserRouter>
     </NotesProvider>
   );
