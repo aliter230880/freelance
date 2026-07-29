@@ -6,6 +6,7 @@ import {
   Database, Plug, Bot, Mail
 } from 'lucide-react';
 import ParticleSphere from './ParticleSphere';
+import ThreeCanvas from './ThreeCanvas';
 
 /* ---------- Small primitives ---------- */
 const MonoLabel = ({ children, dot = true, className = '' }) => (
@@ -44,10 +45,18 @@ function Hero() {
         <div className="absolute left-[-6%] top-1/2 -translate-y-1/2 h-[400px] w-[400px] rounded-full bg-amber-500/[0.05] blur-[130px]" />
       </div>
 
-      {/* Particle sphere layer, positioned right of headline */}
+      {/* Particle sphere layer, positioned to fill the highlighted area between headline and ledger card */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute right-[-4%] top-1/2 -translate-y-1/2 h-[720px] w-[720px] max-w-[55vw] max-h-[80vh]">
-          <ParticleSphere count={2600} />
+        <div className="absolute right-[2%] top-[6%] h-[92%] w-[70%] max-w-[1100px]">
+          <ThreeCanvas
+            distortion={0.65}
+            detail={0.95}
+            speed={0.12}
+            opacity={0.9}
+            color="#e4e4e7"
+            scale={1.1}
+            offset={{ x: -1.5, y: 0.4, z: 0 }}
+          />
         </div>
       </div>
 
