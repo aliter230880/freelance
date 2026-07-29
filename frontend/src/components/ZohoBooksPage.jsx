@@ -5,6 +5,7 @@ import {
   Target, TrendingUp, ShieldCheck, Cog, FileText, GraduationCap, Sparkles,
   Database, Plug, Bot, Mail
 } from 'lucide-react';
+import ParticleSphere from './ParticleSphere';
 
 /* ---------- Small primitives ---------- */
 const MonoLabel = ({ children, dot = true, className = '' }) => (
@@ -29,21 +30,29 @@ const PillBadge = ({ children, tone = 'green' }) => (
 function Hero() {
   return (
     <section className="relative min-h-[92vh] flex items-center border-b border-white/[0.06] overflow-hidden">
-      {/* Ambient orbs */}
+      {/* Fullscreen ambient + sphere */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute top-[20%] left-[8%] h-[420px] w-[420px] rounded-full bg-orange-500/[0.06] blur-[130px]" />
-        <div className="absolute bottom-[10%] right-[15%] h-[360px] w-[360px] rounded-full bg-amber-500/[0.05] blur-[130px]" />
-        {/* Grid overlay */}
+        {/* Faint grid */}
         <div className="absolute inset-0 opacity-[0.05]"
           style={{
             backgroundImage: 'linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px)',
             backgroundSize: '56px 56px',
             maskImage: 'radial-gradient(ellipse at 50% 40%, black 40%, transparent 75%)'
           }} />
+        {/* Orange glow behind sphere */}
+        <div className="absolute right-[-6%] top-1/2 -translate-y-1/2 h-[520px] w-[520px] rounded-full bg-orange-500/[0.10] blur-[130px]" />
+        <div className="absolute left-[-6%] top-1/2 -translate-y-1/2 h-[400px] w-[400px] rounded-full bg-amber-500/[0.05] blur-[130px]" />
+      </div>
+
+      {/* Particle sphere layer, positioned right of headline */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute right-[-4%] top-1/2 -translate-y-1/2 h-[720px] w-[720px] max-w-[55vw] max-h-[80vh]">
+          <ParticleSphere count={2600} />
+        </div>
       </div>
 
       <div className="relative w-full max-w-[1280px] mx-auto px-8 py-24 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-        <div className="lg:col-span-7">
+        <div className="lg:col-span-7 relative z-10">
           <MonoLabel>Financial Operations / Case Study</MonoLabel>
           <h1 className="mt-6 text-[80px] leading-[0.95] font-semibold tracking-[-0.03em] text-white">
             Automate<br />
@@ -76,8 +85,8 @@ function Hero() {
           </div>
         </div>
 
-        {/* Right side visualization */}
-        <div className="lg:col-span-5">
+        {/* Floating ledger card - overlay on sphere bottom-right */}
+        <div className="lg:col-span-5 relative z-10 lg:mt-40 lg:ml-auto lg:max-w-[360px] w-full">
           <HeroVisual />
         </div>
       </div>
