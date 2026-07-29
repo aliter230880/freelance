@@ -30,9 +30,9 @@ const PillBadge = ({ children, tone = 'green' }) => (
 /* ---------- Hero ---------- */
 function Hero() {
   return (
-    <section className="relative min-h-[92vh] flex items-center border-b border-white/[0.06] overflow-hidden">
+    <section className="relative min-h-[92vh] flex items-center border-b border-white/[0.06] overflow-visible">
       {/* Fullscreen ambient + sphere */}
-      <div className="pointer-events-none absolute inset-0">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
         {/* Faint grid */}
         <div className="absolute inset-0 opacity-[0.05]"
           style={{
@@ -45,20 +45,7 @@ function Hero() {
         <div className="absolute left-[-6%] top-1/2 -translate-y-1/2 h-[400px] w-[400px] rounded-full bg-amber-500/[0.05] blur-[130px]" />
       </div>
 
-      {/* Particle sphere layer, positioned to fill the highlighted area above the ledger card */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute right-[2%] top-[-18%] h-[110%] w-[75%] max-w-[1200px]">
-          <ThreeCanvas
-            distortion={0.65}
-            detail={0.95}
-            speed={0.12}
-            opacity={0.9}
-            color="#e4e4e7"
-            scale={1.32}
-            offset={{ x: -1.8, y: 2.4, z: 0 }}
-          />
-        </div>
-      </div>
+      {/* Particle sphere layer removed from here; rendered at page-root so it tucks under the top nav */}
 
       <div className="relative w-full max-w-[1280px] mx-auto px-8 py-24 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
         <div className="lg:col-span-7 relative z-10">
@@ -555,7 +542,23 @@ function FooterBar() {
 /* ---------- Page ---------- */
 export default function ZohoBooksPage() {
   return (
-    <div className="min-h-screen bg-black text-white antialiased overflow-x-hidden zohopage">
+    <div className="min-h-screen bg-black text-white antialiased overflow-x-hidden zohopage relative">
+      {/* Global sphere layer — sits between page background (z-0) and top nav (z-40),
+          so it visually tucks UNDER the sticky nav with backdrop-blur */}
+      <div className="pointer-events-none absolute left-0 right-0 top-0 h-[105vh] z-[5] overflow-hidden">
+        <div className="absolute right-[2%] top-0 h-full w-[70%] max-w-[1100px]">
+          <ThreeCanvas
+            distortion={0.65}
+            detail={0.95}
+            speed={0.12}
+            opacity={0.9}
+            color="#e4e4e7"
+            scale={1.12}
+            offset={{ x: -1.8, y: 3.2, z: 0 }}
+          />
+        </div>
+      </div>
+
       <TopNav />
       <Breadcrumb />
       <Hero />
