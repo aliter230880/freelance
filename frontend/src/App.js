@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard';
 import CategoryPage from './components/CategoryPage';
 import NoteModal from './components/NoteModal';
 import ZohoBooksPage from './components/ZohoBooksPage';
+import VfsVisaBotPage from './components/VfsVisaBotPage';
 
 function Shell() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -79,6 +80,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/projects/zoho-books" element={<ZohoBooksPage />} />
+          <Route path="/projects/vfs-visa-bot" element={<VfsVisaBotPage />} />
           <Route path="/*" element={<Shell />} />
         </Routes>
       </BrowserRouter>
