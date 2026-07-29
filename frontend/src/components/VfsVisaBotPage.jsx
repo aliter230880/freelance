@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Hero } from './vfs/VfsHero';
+import AnimatedBackdrop from './vfs/AnimatedBackdrop';
 import {
   TaskSection, SolutionSection, ArchitectureSection,
   ResultsSection, DemoSection, TechDetailsSection, CtaSection, VfsFooter,
 } from './vfs/VfsSections';
 
-/* ---------- Animated background (UnicornStudio, ported 1:1 from SynqorAI template) ---------- */
+/* ---------- UnicornStudio WebGL layer (loaded lazily; if WebGL fails, we still have AnimatedBackdrop) ---------- */
 function UnicornBackground() {
   useEffect(() => {
     if (window.__unicornInit) return;
@@ -17,21 +18,20 @@ function UnicornBackground() {
       const s = document.createElement('script');
       s.src = 'https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js';
       s.onload = () => {
-        if (window.UnicornStudio && !window.UnicornStudio.isInitialized) {
-          window.UnicornStudio.init();
-          window.UnicornStudio.isInitialized = true;
-        }
+        try {
+          if (window.UnicornStudio && !window.UnicornStudio.isInitialized) {
+            window.UnicornStudio.init();
+            window.UnicornStudio.isInitialized = true;
+          }
+        } catch (e) { /* silent fallback */ }
       };
       (document.head || document.body).appendChild(s);
-    } else if (!window.UnicornStudio.isInitialized) {
-      window.UnicornStudio.init();
-      window.UnicornStudio.isInitialized = true;
     }
   }, []);
 
   return (
     <div
-      className="fixed top-0 left-0 w-full h-screen -z-10 pointer-events-none saturate-50 blur-md brightness-75 mix-blend-screen opacity-30"
+      className="fixed top-0 left-0 w-full h-screen -z-[5] pointer-events-none saturate-50 blur-md brightness-75 mix-blend-screen opacity-30"
       style={{
         maskImage: 'linear-gradient(to bottom, transparent, black 0%, black 80%, transparent)',
         WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 0%, black 80%, transparent)',
@@ -55,18 +55,11 @@ export default function VfsVisaBotPage() {
     <div className="min-h-screen text-slate-300 antialiased overflow-x-hidden relative synqor-style"
       style={{ background: '#000000', fontFamily: "'Inter', ui-sans-serif, system-ui" }}>
 
-      {/* Animated WebGL background — Unicorn Studio (fallback: static glow if it fails to load) */}
-      <UnicornBackground />
+      {/* Always-on animated Canvas 2D backdrop (works without WebGL) */}
+      <AnimatedBackdrop />
 
-      {/* Static fallback / additional ambient glow (kept subtle so it doesn't fight the animated bg) */}
-      <div className="fixed top-0 left-0 w-full h-screen -z-20 pointer-events-none opacity-30"
-        style={{
-          background: `
-            radial-gradient(ellipse at 20% 20%, rgba(127,219,255,0.10), transparent 55%),
-            radial-gradient(ellipse at 80% 60%, rgba(214,191,163,0.10), transparent 55%),
-            radial-gradient(ellipse at 50% 100%, rgba(127,219,255,0.06), transparent 60%)
-          `,
-        }} />
+      {/* Optional Unicorn Studio WebGL layer on top of it (works in real browsers with WebGL) */}
+      <UnicornBackground />
 
       {/* Back to portfolio floating bar */}
       <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-40">
